@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jéssica Almeida · Massagem Terapêutica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --blue:       #5B9BD5;
+      --blue-light: #EBF3FB;
+      --blue-mid:   #C8DEF2;
+      --blue-deep:  #3A78B5;
+      --stone:      #F7F5F2;
+      --warm-white: #FDFCFB;
+      --text:       #2C2C2C;
+      --text-soft:  #6B6B6B;
+      --text-xsoft: #9B9B9B;
+      --border:     #E8E3DC;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'DM Sans', sans-serif;
+      --radius:     12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--warm-white);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 5vw;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(253,252,251,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: .82rem;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue-deep); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: #fff !important;
+      padding: .45rem 1.1rem;
+      border-radius: 999px;
+      font-size: .8rem !important;
+      letter-spacing: .04em !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--blue-deep) !important; transform: translateY(-1px); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 5vw 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: var(--warm-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-shape {
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 55vw; height: 55vw;
+      max-width: 700px; max-height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 40%, var(--blue-light) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-bg-line {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue-deep);
+      margin-bottom: 1.4rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1.5px;
+      background: var(--blue);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: -.01em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--blue-deep);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-soft);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--blue);
+      color: #fff;
+      padding: .85rem 2rem;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 18px rgba(91,155,213,.25);
+    }
+    .btn-primary:hover {
+      background: var(--blue-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(91,155,213,.35);
+    }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      color: var(--blue-deep);
+      font-size: .88rem;
+      font-weight: 400;
+      text-decoration: none;
+      border-bottom: 1px solid var(--blue-mid);
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text); }
+
+    /* Hero visual placeholder */
+    .hero-visual {
+      position: relative;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .hero-photo {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 3/4;
+      border-radius: 200px 200px 120px 120px;
+      background: linear-gradient(160deg, var(--blue-mid) 0%, var(--blue-light) 60%, var(--stone) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='35' r='18' fill='%23A8C8E8' opacity='.4'/%3E%3Cellipse cx='50' cy='72' rx='28' ry='22' fill='%23A8C8E8' opacity='.3'/%3E%3C/svg%3E") center/60% no-repeat;
+    }
+    .hero-photo-label {
+      position: absolute;
+      bottom: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .6rem 1.2rem;
+      font-size: .78rem;
+      color: var(--text-soft);
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    }
+    .hero-badge {
+      position: absolute;
+      top: 32px; right: -16px;
+      background: var(--blue-light);
+      border: 1px solid var(--blue-mid);
+      border-radius: var(--radius);
+      padding: .7rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    }
+    .hero-badge strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--blue-deep);
+    }
+    .hero-badge span {
+      font-size: .7rem;
+      color: var(--text-soft);
+      letter-spacing: .04em;
+    }
+
+    /* ─── SECTION SHARED ─────────────────────────────── */
+    section { padding: 90px 5vw; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .73rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue-deep);
+      margin-bottom: .8rem;
+    }
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 20px; height: 1.5px;
+      background: var(--blue);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; color: var(--blue-deep); }
+
+    .section-lead {
+      font-size: .95rem;
+      color: var(--text-soft);
+      max-width: 520px;
+      line-height: 1.85;
+    }
+
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ─── SERVIÇOS ────────────────────────────────────── */
+    #servicos { background: var(--stone); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.08);
+      border-color: var(--blue-mid);
+    }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--blue-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.4rem;
+    }
+
+    .service-name {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: .4rem;
+    }
+
+    .service-desc {
+      font-size: .85rem;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .service-price {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--blue-deep);
+    }
+    .service-price small {
+      font-family: var(--sans);
+      font-size: .72rem;
+      color: var(--text-xsoft);
+      font-weight: 400;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .service-duration {
+      font-size: .75rem;
+      color: var(--text-xsoft);
+      background: var(--stone);
+      padding: .3rem .7rem;
+      border-radius: 999px;
+    }
+
+    /* ─── SOBRE ───────────────────────────────────────── */
+    #sobre {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 120px 30px 120px 30px;
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-mid) 50%, var(--blue-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='42' r='22' fill='%23A8C8E8' opacity='.5'/%3E%3Cellipse cx='60' cy='85' rx='32' ry='24' fill='%23A8C8E8' opacity='.4'/%3E%3C/svg%3E") center/55% no-repeat;
+    }
+
+    .about-credentials {
+      display: flex; flex-wrap: wrap; gap: .75rem;
+      margin: 1.8rem 0;
+    }
+    .cred-pill {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .76rem;
+      background: var(--blue-light);
+      color: var(--blue-deep);
+      border: 1px solid var(--blue-mid);
+      padding: .35rem .85rem;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .cred-pill::before { content: '✦'; font-size: .55rem; }
+
+    .about-text {
+      font-size: .93rem;
+      color: var(--text-soft);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-stats {
+      display: flex; gap: 2.5rem;
+      margin-top: 2.2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: var(--blue-deep);
+      display: block;
+    }
+    .stat-label {
+      font-size: .75rem;
+      color: var(--text-xsoft);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    /* ─── DEPOIMENTOS ─────────────────────────────────── */
+    #depoimentos { background: var(--stone); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: box-shadow .25s;
+    }
+    .testimonial-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.07); }
+
+    .stars {
+      display: flex; gap: 3px;
+      margin-bottom: 1.1rem;
+    }
+    .stars span {
+      color: var(--blue);
+      font-size: .9rem;
+    }
+
+    .testimonial-text {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex; align-items: center; gap: .85rem;
+    }
+    .author-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--blue-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--blue-deep);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .author-detail {
+      font-size: .75rem;
+      color: var(--text-xsoft);
+    }
+
+    /* ─── CTA ─────────────────────────────────────────── */
+    #agendar {
+      background: linear-gradient(135deg, var(--blue-light) 0%, #fff 60%);
+      text-align: center;
+      padding: 100px 5vw;
+    }
+
+    .cta-box {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--warm-white);
+      border: 1px solid var(--blue-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 2rem;
+      box-shadow: 0 4px 18px rgba(91,155,213,.15);
+    }
+
+    .cta-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .cta-title em { font-style: italic; color: var(--blue-deep); }
+
+    .cta-sub {
+      font-size: .93rem;
+      color: var(--text-soft);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: #25D366;
+      color: #fff;
+      padding: .95rem 2.2rem;
+      border-radius: 999px;
+      font-size: .95rem;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 6px 22px rgba(37,211,102,.28);
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-whatsapp:hover {
+      background: #20b858;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(37,211,102,.38);
+    }
+
+    .cta-note {
+      margin-top: 1.2rem;
+      font-size: .78rem;
+      color: var(--text-xsoft);
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,.55);
+      padding: 3rem 5vw;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.85);
+    }
+    .footer-brand span { color: var(--blue); }
+
+    .footer-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,.45);
+      text-decoration: none;
+      font-size: .8rem;
+      letter-spacing: .04em;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,.85); }
+
+    .footer-copy {
+      font-size: .75rem;
+      color: rgba(255,255,255,.3);
+      width: 100%;
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ─── ANIMATIONS ─────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MOBILE MENU ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+
+      .nav-links {
+        position: fixed;
+        top: 68px; left: 0; right: 0;
+        background: var(--warm-white);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        transform: translateY(-110%);
+        transition: transform .3s ease;
+        box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links li a {
+        display: block;
+        padding: 1rem 5vw;
+        border-bottom: 1px solid var(--border);
+        font-size: .9rem;
+      }
+      .nav-cta {
+        margin: .5rem 5vw;
+        border-radius: var(--radius) !important;
+        padding: .7rem 1rem !important;
+        display: block;
+        text-align: center;
+        border-bottom: none !important;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 100px;
+        text-align: center;
+        gap: 2.5rem;
+      }
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-photo { max-width: 280px; margin: 0 auto; }
+      .hero-badge { right: 0; top: 16px; }
+
+      #sobre {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 70px 5vw;
+      }
+
+      .about-stats { gap: 1.5rem; flex-wrap: wrap; }
+
+      footer { flex-direction: column; text-align: center; gap: 1rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.4rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Jéssica <span>Almeida</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#agendar" class="nav-cta">Agendar</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-bg-line"></div>
+
+  <div>
+    <div class="hero-eyebrow">Massagem Terapêutica &amp; Bem-estar</div>
+    <h1 class="hero-title">
+      Equilíbrio que<br>
+      se <em>sente</em><br>
+      por dentro
+    </h1>
+    <p class="hero-sub">
+      Atendimento personalizado com técnicas integrativas para aliviar tensões, restaurar o equilíbrio e promover bem-estar duradouro.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5500900000000" target="_blank" class="btn-primary">
+        ✦ Agendar sessão
+      </a>
+      <a href="#servicos" class="btn-ghost">Ver serviços →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-photo"></div>
+    <div class="hero-photo-label">📍 Santa Maria - RS</div>
+    <div class="hero-badge">
+      <strong>8+</strong>
+      <span>anos de<br>experiência</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="section-header fade-up">
+    <div class="section-tag">Especialidades</div>
+    <h2 class="section-title">Serviços <em>oferecidos</em></h2>
+    <p class="section-lead">Cada sessão é adaptada às suas necessidades, combinando técnicas para o melhor resultado.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card fade-up">
+      <div class="service-icon">🌿</div>
+      <div class="service-name">Massagem Relaxante</div>
+      <p class="service-desc">Técnica suave e envolvente que alivia o estresse acumulado, relaxa a musculatura e promove sensação profunda de calma.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 150<small>por sessão</small></div>
+        <span class="service-duration">60 min</span>
+      </div>
+    </div>
+
+    <div class="service-card fade-up">
+      <div class="service-icon">💆</div>
+      <div class="service-name">Massagem Terapêutica</div>
+      <p class="service-desc">Foco em pontos de tensão específicos, indicada para dores musculares, contraturas e recuperação física.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 180<small>por sessão</small></div>
+        <span class="service-duration">60 min</span>
+      </div>
+    </div>
+
+    <div class="service-card fade-up">
+      <div class="service-icon">💧</div>
+      <div class="service-name">Drenagem Linfática</div>
+      <p class="service-desc">Movimentos suaves e rítmicos que estimulam o sistema linfático, reduzindo retenção de líquidos e inchaços.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 170<small>por sessão</small></div>
+        <span class="service-duration">75 min</span>
+      </div>
+    </div>
+
+    <div class="service-card fade-up">
+      <div class="service-icon">🌸</div>
+      <div class="service-name">Shiatsu</div>
+      <p class="service-desc">Técnica japonesa com pressão em pontos energéticos do corpo, equilibrando o fluxo vital e aliviando tensões profundas.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 160<small>por sessão</small></div>
+        <span class="service-duration">60 min</span>
+      </div>
+    </div>
+
+    <div class="service-card fade-up">
+      <div class="service-icon">🌙</div>
+      <div class="service-name">Massagem com Pedras Quentes</div>
+      <p class="service-desc">Combinação de pedras vulcânicas aquecidas com técnicas de relaxamento para um tratamento profundo e reconfortante.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 220<small>por sessão</small></div>
+        <span class="service-duration">90 min</span>
+      </div>
+    </div>
+
+    <div class="service-card fade-up">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Pacote Bem-estar</div>
+      <p class="service-desc">5 sessões à sua escolha com 15% de desconto, programadas conforme sua disponibilidade e necessidade.</p>
+      <div class="service-footer">
+        <div class="service-price">R$ 680<small>5 sessões</small></div>
+        <span class="service-duration">Flexível</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="about-photo fade-up"></div>
+
+  <div class="fade-up">
+    <div class="section-tag">Sobre mim</div>
+    <h2 class="section-title">Jéssica <em>Almeida</em></h2>
+
+    <div class="about-credentials">
+      <span class="cred-pill">Terapeuta Certificada</span>
+      <span class="cred-pill">ABRAMTE</span>
+      <span class="cred-pill">Aromaterapia</span>
+      <span class="cred-pill">Ayurveda</span>
+    </div>
+
+    <p class="about-text">
+      Sou terapeuta corporal com mais de 8 anos de experiência, apaixonada pela arte de cuidar de pessoas através do toque intencional e das técnicas integrativas.
+    </p>
+    <p class="about-text">
+      Formada em Terapias Corporais pelo Instituto Brasileiro de Terapias Holísticas, com especializações em drenagem linfática manual, shiatsu e aromaterapia terapêutica. Cada sessão é única e planejada para você.
+    </p>
+    <p class="about-text">
+      Meu espaço foi criado para ser um lugar de pausa e reconexão — onde você pode deixar o peso do dia de lado e cuidar de si com atenção e carinho.
+    </p>
+
+    <div class="about-stats">
+      <div>
+        <strong class="stat-num">800+</strong>
+        <span class="stat-label">Clientes atendidos</span>
+      </div>
+      <div>
+        <strong class="stat-num">8</strong>
+        <span class="stat-label">Anos de atuação</span>
+      </div>
+      <div>
+        <strong class="stat-num">6</strong>
+        <span class="stat-label">Especializações</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="section-header fade-up">
+    <div class="section-tag">Depoimentos</div>
+    <h2 class="section-title">O que dizem as<br><em>clientes</em></h2>
+  </div>
+
+  <div class="testimonials-grid">
+
+    <div class="testimonial-card fade-up">
+      <div class="stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-text">"Encontrei na Jéssica muito mais do que alívio físico. Cada sessão é uma verdadeira experiência de autocuidado. Saio renovada toda vez."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">CM</div>
+        <div>
+          <div class="author-name">Carla Mendonça</div>
+          <div class="author-detail">Massagem Terapêutica · cliente desde 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-up">
+      <div class="stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-text">"Fiz a drenagem linfática antes do casamento e os resultados foram incríveis. Profissional atenciosa, ambiente acolhedor. Recomendo muito!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JS</div>
+        <div>
+          <div class="author-name">Juliana Souza</div>
+          <div class="author-detail">Drenagem Linfática · cliente desde 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-up">
+      <div class="stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-text">"Tinha muita dor nas costas por trabalhar sentada o dia inteiro. Depois das sessões de shiatsu, a minha qualidade de vida melhorou muito."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RO</div>
+        <div>
+          <div class="author-name">Roberta Oliveira</div>
+          <div class="author-detail">Shiatsu · cliente desde 2021</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-up">
+      <div class="stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-text">"A massagem com pedras quentes é uma experiência diferente de tudo que já fiz. Saí completamente relaxada e dorme melhor desde que comecei o acompanhamento."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">PL</div>
+        <div>
+          <div class="author-name">Patrícia Lima</div>
+          <div class="author-detail">Pedras Quentes · cliente desde 2023</div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="agendar">
+  <div class="cta-box fade-up">
+    <div class="cta-icon">🌿</div>
+    <h2 class="cta-title">Pronta para <em>cuidar</em><br>de você?</h2>
+    <p class="cta-sub">Agende sua sessão pelo WhatsApp. Atendimento de segunda a sábado, das 9h às 19h. Localizada no centro de Santa Maria, RS.</p>
+    <a href="https://wa.me/5555991216881?text=Olá%2C%20gostaria%20de%20agendar%20uma%20sessão!" target="_blank" class="btn-whatsapp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Agendar pelo WhatsApp
+    </a>
+    <p class="cta-note">📱 (055) 99121-6881 · contato@jessicaalmeida.com.br</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Jéssica <span>Almeida</span></div>
+  <ul class="footer-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#depoimentos">Depoimentos</a></li>
+    <li><a href="#agendar">Contato</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Jéssica Almeida · Massagem Terapêutica · Santa Maria - RS · Site demonstrativo</div>
+</footer>
+
+<script>
+  // NAV scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Stagger cards within grids
+  document.querySelectorAll('.services-grid, .testimonials-grid').forEach(grid => {
+    grid.querySelectorAll('.fade-up').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 80}ms`;
+    });
+  });
+</script>
+</body>
+</html>
